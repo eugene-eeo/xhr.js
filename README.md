@@ -6,6 +6,7 @@ compatibility and overall size.
 
     var req = xhr.get('/status', {
         headers: {},
+        payload: {data: true},
         callback: function(err, res) {
             console.log(res);
         },

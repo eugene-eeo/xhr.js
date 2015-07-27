@@ -15,9 +15,8 @@ var xhr = (function() {
 
     req.open(type, url);
 
-    for (var item in headers) {
-      if (headers.hasOwnProperty(item))
-        req.setRequestHeader(item, headers[item]);
+    for (var k in headers) {
+      req.setRequestHeader(k, headers[k]);
     }
 
     req.onerror = function() { callback(true); };

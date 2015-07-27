@@ -1,7 +1,9 @@
 var xhr = (function() {
+  'use strict';
+
   var jsonHeaders = {
     'Accept': 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   };
 
   var request = function(type, url, opts) {
@@ -19,7 +21,7 @@ var xhr = (function() {
     }
 
     req.onerror = function() { callback(true); };
-    req.onload  = function() {
+    req.onload = function() {
       callback(
         null,
         opts.raw
@@ -37,7 +39,7 @@ var xhr = (function() {
 
   return {
     request: request,
-    post:    request.bind(this, 'POST'),
-    get:     request.bind(this, 'GET'),
+    post: request.bind(this, 'POST'),
+    get: request.bind(this, 'GET')
   };
 })();

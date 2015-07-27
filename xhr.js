@@ -14,7 +14,6 @@ var xhr = (function() {
     var callback = (opts.callback || function() {}).bind(req);
 
     req.open(type, url);
-
     for (var k in headers) {
       req.setRequestHeader(k, headers[k]);
     }

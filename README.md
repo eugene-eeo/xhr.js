@@ -11,11 +11,12 @@ compatibility and overall size.
         },
     });
 
-## Options
+By default, **xhr.js** assumes that you are interfacing with
+JSON endpoints using JSON data. If you want to use other forms
+of data exchange you can turn it off by using:
 
-| Name      | Type     | Description                             |
-| --------- |:--------:|:--------------------------------------- |
-| headers   | Object   | Mapping of `String` to `String` headers that will be added to the XHR object. |
-| callback  | Function | Callback to be invoked with an error and the (raw/decoded) response. The context is bound to the XHR object. |
-| raw       | Boolean  | Whether JSON parsing or encoding is to be done. If this is set to false (default) and no headers are passed, the `Content-Type` and `Accept` headers are set to `application/json`. |
-| payload   | String *or* Object | Data to be sent to the server. |
+    xhr.get('/status', { raw: true });
+
+API is extremely simple. For now, consult the [source].
+
+[source]: https://github.com/eugene-eeo/xhr.js/blob/master/xhr.js

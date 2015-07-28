@@ -9,7 +9,7 @@ var xhr = (function() {
   var request = function(type, url, opts) {
     var req = new XMLHttpRequest();
 
-    var payload = (opts.payload === undefined) ? null : opts.payload;
+    var payload = ('payload' in opts) ? opts.payload : null;
     var headers = opts.headers || (opts.raw ? {} : jsonHeaders);
     var callback = (opts.callback || function() {}).bind(req);
 

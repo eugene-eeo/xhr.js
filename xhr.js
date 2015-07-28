@@ -14,9 +14,8 @@ var xhr = (function() {
     var callback = (opts.callback || function() {}).bind(req);
 
     req.open(type, url);
-    for (var k in headers) {
+    for (var k in headers)
       req.setRequestHeader(k, headers[k]);
-    }
 
     req.onerror = function() { callback(true); };
     req.onload = function() {
@@ -30,7 +29,6 @@ var xhr = (function() {
 
     if (!opts.raw)
       payload = JSON.stringify(payload);
-
     req.send(payload);
     return req;
   };

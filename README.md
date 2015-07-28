@@ -14,7 +14,7 @@ compatibility and overall size.
 
 By default, **xhr.js** assumes that you are interfacing with
 JSON endpoints using JSON data. If you want to use other forms
-of data exchange you can turn it off by using:
+of data exchange you can turn JSON decoding and encoding off:
 
     xhr.get('/status', { raw: true });
 

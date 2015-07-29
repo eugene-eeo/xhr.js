@@ -1,6 +1,7 @@
 var xhr = {
   request: function(type, url, opts) {
     'use strict';
+
     var req = new XMLHttpRequest(),
         payload = ('payload' in opts) ? opts.payload : null,
         headers = opts.headers || (opts.raw ? {} : {

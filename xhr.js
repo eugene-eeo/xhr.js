@@ -2,13 +2,14 @@ var xhr = {
   request: function(type, url, opts) {
     'use strict';
 
+    var json = 'application/json';
     var req = new XMLHttpRequest(),
         payload = ('payload' in opts) ? opts.payload : null,
+        callback = (opts.callback || function() {}).bind(req),
         headers = opts.headers || (opts.raw ? {} : {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }),
-        callback = (opts.callback || function() {}).bind(req);
+          'Content-Type': json,
+          'Accept': json
+        });
 
     req.open(type, url);
     for (var k in headers)
@@ -28,7 +29,7 @@ var xhr = {
       payload = JSON.stringify(opts);
     req.send(payload);
     return req;
-  },
+  }
 };
 
 xhr.post = xhr.request.bind(xhr, 'POST');

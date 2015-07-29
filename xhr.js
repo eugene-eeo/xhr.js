@@ -17,12 +17,8 @@ var xhr = {
 
     req.onerror = function() { callback(true); };
     req.onload = function() {
-      callback(
-        null,
-        opts.raw
-          ? req.responseText
-          : JSON.parse(req.responseText)
-      );
+      var res = req.responseText;
+      callback(err, opts.raw ? res : JSON.parse(res));
     };
 
     if (!opts.raw)

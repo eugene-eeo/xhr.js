@@ -15,7 +15,7 @@ var xhr = {
     for (var k in headers)
       req.setRequestHeader(k, headers[k]);
 
-    req.onerror = function() { callback(true) };
+    req.onerror = function() { callback(true); };
     req.onload = function() {
       callback(
         null,

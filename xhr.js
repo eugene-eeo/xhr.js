@@ -1,23 +1,19 @@
-var xhr = (function() {
-  'use strict';
-
-  var jsonHeaders = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  };
-
-  var request = function(type, url, opts) {
-    var req = new XMLHttpRequest();
-
-    var payload = ('payload' in opts) ? opts.payload : null;
-    var headers = opts.headers || (opts.raw ? {} : jsonHeaders);
-    var callback = (opts.callback || function() {}).bind(req);
+var xhr = {
+  request: function(type, url, opts) {
+    'use strict';
+    var req = new XMLHttpRequest(),
+        payload = ('payload' in opts) ? opts.payload : null,
+        headers = opts.headers || (opts.raw ? {} : {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }),
+        callback = (opts.callback || function() {}).bind(req);
 
     req.open(type, url);
     for (var k in headers)
       req.setRequestHeader(k, headers[k]);
 
-    req.onerror = function() { callback(true); };
+    req.onerror = function() { callback(true) };
     req.onload = function() {
       callback(
         null,
@@ -28,14 +24,11 @@ var xhr = (function() {
     };
 
     if (!opts.raw)
-      payload = JSON.stringify(payload);
+      payload = JSON.stringify(opts);
     req.send(payload);
     return req;
-  };
+  },
+};
 
-  return {
-    request: request,
-    post: request.bind(this, 'POST'),
-    get: request.bind(this, 'GET')
-  };
-})();
+xhr.post = xhr.request.bind(xhr, 'POST');
+xhr.get =  xhr.request.bind(xhr, 'GET');

@@ -17,8 +17,15 @@ var xhr = {
 
     req.onerror = function() { callback(true); };
     req.onload = function() {
-      var res = req.responseText;
-      callback(err, opts.raw ? res : JSON.parse(res));
+      var res = req.responseText,
+          err = null;
+      if (!opts.raw)
+        try {
+          res = JSON.parse(res);
+        } catch(e) {
+          err = e;
+        }
+      callback(err, res);
     };
 
     if (!opts.raw)

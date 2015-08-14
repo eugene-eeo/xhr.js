@@ -3,10 +3,10 @@ var xhr = {
     'use strict';
 
     var json = 'application/json';
-    var req = new XMLHttpRequest(),
-        payload = ('payload' in opts) ? opts.payload : null,
-        callback = (opts.callback || function() {}).bind(req),
-        headers = opts.headers || (opts.raw ? {} : {
+    var req = new XMLHttpRequest();
+    var payload = ('payload' in opts) ? opts.payload : null;
+    var callback = (opts.callback || function() {}).bind(req);
+    var headers = opts.headers || (opts.raw ? {} : {
           'Content-Type': json,
           'Accept': json
         });
@@ -17,8 +17,8 @@ var xhr = {
 
     req.onerror = function() { callback(true); };
     req.onload = function() {
-      var res = req.responseText,
-          err = null;
+      var res = req.responseText;
+      var err = null;
       if (!opts.raw)
         try {
           res = JSON.parse(res);

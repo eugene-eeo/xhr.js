@@ -36,4 +36,4 @@ var xhr = {
 };
 
 xhr.post = xhr.request.bind(xhr, 'POST');
-xhr.get =  xhr.request.bind(xhr, 'GET');
+xhr.get  = xhr.request.bind(xhr, 'GET');

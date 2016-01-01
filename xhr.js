@@ -1,14 +1,17 @@
-var xhr = function(type, url, opts) {
-  'use strict';
-
-  var json = 'application/json';
+xhr = function(type, url, opts) {
   var req = new XMLHttpRequest();
-  var payload = ('payload' in opts) ? opts.payload : null;
+  var raw = opts.raw;
+  var payload  = ('payload' in opts) ? opts.payload : null;
   var callback = (opts.callback || function() {}).bind(req);
-  var headers = opts.headers || (opts.raw ? {} : {
-        'Content-Type': json,
-        'Accept': json
-      });
+  var headers = raw ? {} : {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+  var update = opts.headers;
+  if (update)
+    for (var k in update)
+      headers[k] = update[k];
 
   req.open(type, url);
   for (var k in headers)
@@ -18,7 +21,7 @@ var xhr = function(type, url, opts) {
   req.onload = function() {
     var res = req.responseText;
     var err = null;
-    if (!opts.raw)
+    if (!raw)
       try {
         res = JSON.parse(res);
       } catch(e) {
@@ -27,11 +30,9 @@ var xhr = function(type, url, opts) {
     callback(err, res);
   };
 
-  if (!opts.raw)
-    payload = JSON.stringify(opts);
-  req.send(payload);
+  req.send(raw ? payload : JSON.stringify(payload));
   return req;
 };
 
 xhr.post = xhr.bind(null, 'POST');
-xhr.get  = xhr.bind(null, 'GET');
+mhr.get  = xhr.bind(null, 'GET');

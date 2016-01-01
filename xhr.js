@@ -1,39 +1,37 @@
-var xhr = {
-  request: function(type, url, opts) {
-    'use strict';
+var xhr = function(type, url, opts) {
+  'use strict';
 
-    var json = 'application/json';
-    var req = new XMLHttpRequest();
-    var payload = ('payload' in opts) ? opts.payload : null;
-    var callback = (opts.callback || function() {}).bind(req);
-    var headers = opts.headers || (opts.raw ? {} : {
-          'Content-Type': json,
-          'Accept': json
-        });
+  var json = 'application/json';
+  var req = new XMLHttpRequest();
+  var payload = ('payload' in opts) ? opts.payload : null;
+  var callback = (opts.callback || function() {}).bind(req);
+  var headers = opts.headers || (opts.raw ? {} : {
+        'Content-Type': json,
+        'Accept': json
+      });
 
-    req.open(type, url);
-    for (var k in headers)
-      req.setRequestHeader(k, headers[k]);
+  req.open(type, url);
+  for (var k in headers)
+    req.setRequestHeader(k, headers[k]);
 
-    req.onerror = function() { callback(true); };
-    req.onload = function() {
-      var res = req.responseText;
-      var err = null;
-      if (!opts.raw)
-        try {
-          res = JSON.parse(res);
-        } catch(e) {
-          err = e;
-        }
-      callback(err, res);
-    };
-
+  req.onerror = function() { callback(true); };
+  req.onload = function() {
+    var res = req.responseText;
+    var err = null;
     if (!opts.raw)
-      payload = JSON.stringify(opts);
-    req.send(payload);
-    return req;
-  }
+      try {
+        res = JSON.parse(res);
+      } catch(e) {
+        err = e;
+      }
+    callback(err, res);
+  };
+
+  if (!opts.raw)
+    payload = JSON.stringify(opts);
+  req.send(payload);
+  return req;
 };
 
-xhr.post = xhr.request.bind(xhr, 'POST');
-xhr.get  = xhr.request.bind(xhr, 'GET');
+xhr.post = xhr.bind(null, 'POST');
+xhr.get  = xhr.bind(null, 'GET');

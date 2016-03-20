@@ -35,4 +35,4 @@ xhr = function(type, url, opts) {
 };
 
 xhr.post = xhr.bind(null, 'POST');
-mhr.get  = xhr.bind(null, 'GET');
+xhr.get  = xhr.bind(null, 'GET');
